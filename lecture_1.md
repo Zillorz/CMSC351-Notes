@@ -1,7 +1,5 @@
 # Lecture 1 - CMSC351
 
-Justin Wyss-Galifent has excellent notes for this class, these notes are instead supposed to be brief, quick summaries with some explanation and practice.
-
 PRACTICE: Leetcode 322 (also try 518).
 
 ## The coin changing problem:
