@@ -12,7 +12,8 @@ A specific answer might be: $T(n) = 5n^2 + 6n + 1$, but this is basically imposs
 Instead, we use $O(n)$, $\Omega(n)$, and $\theta(n)$
 
 
-**Definition**: $f(n) \in O(g(n))$ when $\exists n_0,C  \forall n >= n_0 f(n) <= C \times g(n)$
+**Definition**: $f(n) \in O(g(n))$ when $\exists n_0,C \ \forall n >= n_0 \ f(n) <= C \times g(n)$
+
 
 Prove from the definition:
 Suppose we want to prove $f(n) \in O(g(n))$
