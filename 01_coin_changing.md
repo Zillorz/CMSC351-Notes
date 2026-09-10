@@ -1,4 +1,4 @@
-# Lecture 1 - CMSC351
+# Coin Changing
 
 PRACTICE: Leetcode 322 (also try 518).
 
