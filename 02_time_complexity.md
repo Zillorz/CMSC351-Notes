@@ -43,9 +43,6 @@ Big O provides an **upper** bound, sometimes we want a lower bound or something 
 > [!NOTE]
 > To prove big theta, prove big omega and big O. Won't be asked typically
 
-> [!CAUTION]
-> Notice that for Omega, many functions can satisfy the bound, e.g. g(n) = 0, g(n) = x^-999999, etc...
-
 Strategy to prove $\Omega(n)$
 
 As with O(n), we break down f(n)
