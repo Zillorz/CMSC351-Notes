@@ -13,7 +13,7 @@ Instead, we use $O(n)$, $\Omega(n)$, and $\theta(n)$
 
 ### $O(n)$
 
-**Definition**: $f(n) \in O(g(n))$ when $\exists n_0,C > 0 \ \forall n \ge n_0 \ f(n) <= C \times g(n)$
+**Definition**: $f(n) \in O(g(n))$ when $\exists n_0,C > 0 \ \forall n \ge n_0 \ f(n) \le C \times g(n)$
 
 
 Prove from the definition:
@@ -62,9 +62,9 @@ as the n^2 * lg(n) is the main term, and all other terms are '+'.
 Ex)
 
 $$ 
-\text{show that:} 3n^2 - n = \Omega(n^2)
-n^2 \ge n, n_0 = 1
-3n^2 - n \ge 3n^2 - n^2 \ge 2n^2 n_0 = 1 
+\text{show that:} 3n^2 - n = \Omega(n^2) \\
+n^2 \ge n, n_0 = 1 \\
+3n^2 - n \ge 3n^2 - n^2 \ge 2n^2 n_0 = 1 \\
 B=2, n_0=1, so 3n^2 - n = \Omega(n^2)
 $$
 
@@ -84,3 +84,55 @@ Intuition: given f(n), find largest term, that is probably O(n) and Omega(n)
 > [!CAUTION]
 > The biggest term is never going to be negative, because what kind of function gets faster with more data?
 > Just take largest positive bit in this case
+
+## Big Limit Theorems
+
+Suppose we have functions f(x) and g(x).
+1. if $\lim_{x\to\infty} f(x)/g(x) \ne \infty$ then $f(x) = O(g(x)$
+2. if $\lim_{x\to\infty} f(x)/g(x) \ne 0$ then $f(x) = \Omega(g(x)$
+3. if $\lim_{x\to\infty} f(x)/g(x) \ne 0, \infty$ then $f(x) = \theta(g(x)$
+
+#### Some derivatives to remember
+
+> [!NOTE]
+> L'Hopitals rule may be useful for solving the limit defintions above, so differentiating f(x) and g(x) may be necessary
+
+1. $\frac{d}{dx} \ln x = \frac{1}{x}$
+2. $\frac{d}{dx} \log_b x = \frac{1}{x \ln b}$
+3. $\frac{d}{dx} \lg x = \frac{1}{x \ln 2}$
+4. $\frac{d}{dx} e^x = e^x$
+5. $\frac{d}{dx} b^x = b^x \ln(b)$
+6. $\frac{d}{dx} 2^x = 2^x \ln(2)$
+
+Let's prove that $\log_b(x) = \theta(\lg(x))$
+
+$$
+\lim_{x\to\infty} \frac{\log_b(x)}{\lg(x)} = \frac{\infty}{\infty} \\
+\lim_{x\to\infty} \frac{\frac{1}{x \ln b}}{\frac{1}{x \ln 2}} \\
+\frac{ln(2)}{\ln(b)} \ne 0, \infty \\
+\blacksquare
+$$
+
+### Time Analysis
+
+Q: When analyzing code, if all we need is $\theta(n) \text{ or } O(n) \text{ or } \Omega(n)$, what do we need to care about?
+
+Consider the following
+```j-pseudo
+sum = 0
+for i = 1 to n inclusive:
+    sum = sum + i
+    if floor(i/2) == i/2 then:
+        sum = sum + 5
+    end if
+end for
+return (sum)
+```
+
+For the exact time T(n), we'd need every single lines runtime.
+Buf if we just want one of our Big Asymptotic time complexities, we only want to focus on things that run N times.
+
+- The code `sum = 0` and `return (sum)` are both O(1)
+- The code inside the for loop, also runs at O(1), but it runs N times, so the complexity is O(n)
+
+This leads to O(n) code
