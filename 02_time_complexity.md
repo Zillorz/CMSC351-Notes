@@ -48,7 +48,7 @@ Strategy to prove $\Omega(n)$
 As with O(n), we break down f(n)
 $f(n) = f_0(n) + f_1(n) + ... + f_m(n)$
 
-For $\Omega(n)$, we ignore all $f_i(n) > 0 \text{where} f_i(n) \ne C \times g(n)$
+For $\Omega(n)$, we ignore all $f_i(n) > 0\text{ where }f_i(n) \ne C \times g(n)$
 
 If we have a negative term, we need to replace $f_i(n)$ with $C \times g(n)$ 
 such that $\forall n_0, C > 0 n \ge n_0 C \times g(n) \ge f_i(n)$.
@@ -62,10 +62,10 @@ as the n^2 * lg(n) is the main term, and all other terms are '+'.
 Ex)
 
 $$ 
-\text{show that:} 3n^2 - n = \Omega(n^2) \\
-n^2 \ge n, n_0 = 1 \\
-3n^2 - n \ge 3n^2 - n^2 \ge 2n^2 n_0 = 1 \\
-B=2, n_0=1, so 3n^2 - n = \Omega(n^2)
+\text{show that: } 3n^2 - n = \Omega(n^2) \newline
+n^2 \ge n, n_0 = 1 \newline
+3n^2 - n \ge 3n^2 - n^2 \ge 2n^2, n_0 = 1 \newline
+B=2, n_0=1, \text{so } 3n^2 - n = \Omega(n^2)
 $$
 
 Also, you can use 0<C<1 if a coefficient of g(n) is not enough for each term.
@@ -88,9 +88,9 @@ Intuition: given f(n), find largest term, that is probably O(n) and Omega(n)
 ## Big Limit Theorems
 
 Suppose we have functions f(x) and g(x).
-1. if $\lim_{x\to\infty} f(x)/g(x) \ne \infty$ then $f(x) = O(g(x)$
-2. if $\lim_{x\to\infty} f(x)/g(x) \ne 0$ then $f(x) = \Omega(g(x)$
-3. if $\lim_{x\to\infty} f(x)/g(x) \ne 0, \infty$ then $f(x) = \theta(g(x)$
+1. if $\lim_{x\to\infty} \frac{f(x)}{g(x)} \ne \infty$ then $f(x) = O(g(x)$
+2. if $\lim_{x\to\infty} \frac{f(x)}{g(x)} \ne 0$ then $f(x) = \Omega(g(x)$
+3. if $\lim_{x\to\infty} \frac{f(x)}{g(x)} \ne 0, \infty$ then $f(x) = \theta(g(x)$
 
 #### Some derivatives to remember
 
@@ -107,15 +107,15 @@ Suppose we have functions f(x) and g(x).
 Let's prove that $\log_b(x) = \theta(\lg(x))$
 
 $$
-\lim_{x\to\infty} \frac{\log_b(x)}{\lg(x)} = \frac{\infty}{\infty} \\
-\lim_{x\to\infty} \frac{\frac{1}{x \ln b}}{\frac{1}{x \ln 2}} \\
-\frac{ln(2)}{\ln(b)} \ne 0, \infty \\
+\lim_{x\to\infty} \frac{\log_b(x)}{\lg(x)} = \frac{\infty}{\infty} \newline
+\lim_{x\to\infty} \frac{\frac{1}{x \ln b}}{\frac{1}{x \ln 2}} \newline
+\frac{\ln(2)}{\ln(b)} \ne 0, \infty \newline
 \blacksquare
 $$
 
 ### Time Analysis
 
-Q: When analyzing code, if all we need is $\theta(n) \text{ or } O(n) \text{ or } \Omega(n)$, what do we need to care about?
+Q: When analyzing code, if all we need is $\theta(n)\text{ or }O(n)\text{ or }\Omega(n)$, what do we need to care about?
 
 Consider the following
 ```j-pseudo
@@ -130,7 +130,7 @@ return (sum)
 ```
 
 For the exact time T(n), we'd need every single lines runtime.
-Buf if we just want one of our Big Asymptotic time complexities, we only want to focus on things that run N times.
+But if we just want one of our Big Asymptotic time complexities, we only want to focus on things that run N times.
 
 - The code `sum = 0` and `return (sum)` are both O(1)
 - The code inside the for loop, also runs at O(1), but it runs N times, so the complexity is O(n)
