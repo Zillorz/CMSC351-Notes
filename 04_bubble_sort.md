@@ -36,7 +36,7 @@ A = [8 4 3 4 1]
     [1 3 4 4 8]
 ```
 
-The time complexity is: $O(n^2)$
+The time complexity is: $\theta(n^2)$
  
 Stability: YES
     Meaning: Identical elements stay in relative order
@@ -46,3 +46,22 @@ In-Place: YES
 
 Auxiliary Space: $\theta(1)$ or 3
     Meaning: The auxiliary space is the memory/space used not including the list
+
+### Inversions
+
+Definition) For a list A, an *inversion* is is pair of indices (i,j) w/ i<j but A_i > A_j.
+
+Just a pair of indices out of order.
+
+A list with no inversions is a sorted list.
+A list sorted in descending order has `n choose 2` = $\frac{n(n - 1)}{2}$
+
+Ex) `A = [5 1 3 4 2]`
+
+Inversions are (0, 1) (0, 2) (0, 3) (0, 4), (2, 4), (3, 4)
+
+**Bubble sort**
+
+The number of times bubble sort swaps on A = The number of inversions on A.
+
+So `bubble(A)` swaps 6 times

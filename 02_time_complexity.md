@@ -118,7 +118,7 @@ $$
 Q: When analyzing code, if all we need is $\theta(n)\text{ or }O(n)\text{ or }\Omega(n)$, what do we need to care about?
 
 Consider the following
-```j-pseudo
+```jpseudo
 sum = 0
 for i = 1 to n inclusive:
     sum = sum + i
