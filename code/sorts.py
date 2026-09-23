@@ -4,7 +4,7 @@ def swap(nums: list[int], i: int, j: int):
 def bubble(nums: list[int]):
     n = len(nums)
 
-    for i in range(n):
+    for i in range(n-1):
         for j in range(n - 1 - i):
             if nums[j] > nums[j + 1]:
                 swap(nums, j, j+1)
@@ -23,5 +23,5 @@ def selection(nums: list[int]):
 
         # swap i, i does nothing
         swap(nums, i, min_idx)
-
+    
     return nums
