@@ -25,3 +25,15 @@ def selection(nums: list[int]):
         swap(nums, i, min_idx)
     
     return nums
+
+def insertion(nums: list[int]):
+    n = len(nums)
+
+    for i in range(1, n):
+        j = i
+
+        while j > 0 and nums[j] < nums[j - 1]:
+            swap(nums, j, j - 1)
+            j -= 1
+
+    return nums
