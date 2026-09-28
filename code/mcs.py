@@ -20,23 +20,23 @@ def dac_mcs(nums: list[int]):
         return nums[0]
 
     # first we solve the left and right problems
-    left_sol = dac_mcs(nums[:int(n/2)])
-    right_sol = dac_mcs(nums[int(n/2):])
+    left_sol = dac_mcs(nums[:n//2])
+    right_sol = dac_mcs(nums[n//2:])
 
     # but what if the solution is in the middle?
     # then we need to solve
 
     lc_sum = nums[0]
-    rc_sum = nums[int(n/2)]
+    rc_sum = nums[n//2]
 
     rolling = 0
-    for i in range(int(n/2), n):
+    for i in range(n // 2, n):
         rolling += nums[i]
 
         if rolling > rc_sum: rc_sum = rolling
 
     rolling = 0
-    for i in range(int(n/2) - 1, -1, -1):
+    for i in range(n // 2 - 1, -1, -1):
         rolling += nums[i]
 
         if rolling > lc_sum: lc_sum = rolling
