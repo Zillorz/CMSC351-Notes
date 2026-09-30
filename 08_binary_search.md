@@ -42,7 +42,7 @@ B) Worst Case:
 
 This is a little informal/sloppy, not rigorous
 
-(WIP)
+(WIP, wrong currently)
 C) Average Case:
 - Let's assign each element a number, the number of iterations it would take
 - On the first step, we can match exactly one element, so 1/n chance for that
