@@ -109,4 +109,98 @@ Note: Finding T(n) makes finding asymptotic time complexities easy
 2. Second example: $T(n) = \theta(n^2)$
 
 For certain recurrence relations, we can go from recurrence relations to θ(f(n))
-(this will be covered later)
+
+## Trees
+
+Two reasons to represent RR as trees
+1. Proof of the Master Theorem* uses trees
+2. Can simplify the process of finding a T(n)
+
+Intro step: $T(n) = 2T(\frac{n}{3}) + 5n + 1, T(1) = 7$
+
+We want T(9),
+$T(9) = 2T(3) + 5(9) + 1$
+
+```mermaid
+graph TD;
+    A["5(9) + 1"]-->B["T(3)"]
+    A-->C["T(3)"]
+```
+
+The sum of this tree is T(9).
+Now let's plug in T(3) = 2T(1) + 5(3) + 1
+
+```mermaid
+graph TD;
+    A["5(9) + 1"]-->B["5(3) + 1"]
+    A-->C["5(3) + 1"]
+    B-->D["T(1)"]
+    B-->E["T(1)"]
+    C-->F["T(1)"]
+    C-->G["T(1)"]
+```
+
+Finally, plug in T(1) = 7
+
+```mermaid
+graph TD;
+    A["5(9) + 1"]-->B["5(3) + 1"]
+    A-->C["5(3) + 1"]
+    B-->D[7]
+    B-->E[7]
+    C-->F[7]
+    C-->G[7]
+```
+
+We can use the same idea to a general formula for T(n)
+
+```mermaid
+graph TD;
+    A["5n + 1"]-->B["T(n/3)"]
+    A-->C["T(n/3)"]
+```
+
+again
+
+```mermaid
+graph TD;
+    A["5n + 1"]-->B["5(n/3) + 1"]
+    A-->C["5(n/3) + 1"]
+    B-->D["T(n/9)"]
+    B-->E["T(n/9)"]
+    C-->F["T(n/9)"]
+    C-->G["T(n/9)"]
+```
+
+We can see this tree continues until $n/3^k = 1$, where k is the depth of the tree. 
+
+The sum of the this tree is also T(n). (!)
+
+We can then use this to say,
+$$
+k = \log_3(n) \\
+T(n) = 2^{k} \times 7 + \sum_{i=0}^{k-1} 2^i(5(\frac{n}{3^i}) + 1) \\
+\text{Simplify by} \\
+5n\sum_{i=0}^{k-1} (\frac{2}{3})^i + 2^i \\
+5n \times \frac{1 - (\frac{2}{3})^k}{1 - \frac{2}{3}} + 2^k - 1 \\
+\\
+\text{Subbing this in for the sum} \\
+8(2^{k}) + 15n(1 - (\frac{2}{3})^k) - 1 \\
+\text{Since } k = \log_3(n), \\
+8(2^{\log_3(n)}) + 15n(1 - \frac{2^{\log_3(n)}}{n}) - 1 \\
+-7(2^{\log_3(n)}) + 15n - 1 \\
+\text{By the change of base formula, } 2^{\log_3(n)} = 2^{\frac{\lg n}{\lg 3}} = n^(\frac{1}{\lg 3}) \\
+-7n^{\lg 3} + 15n - 1
+$$
+
+As $\frac{1}{\lg 3} < 1$, n is the dominant term.
+
+So T(n) = θ(n).
+
+Let's generalize:
+
+For an equation $T(n) = aT(\frac{n}{b}) + f(n)$
+observe: 
+- a = \#children each node has
+- b = factor each child decreases by
+- continue until ...
