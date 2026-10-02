@@ -177,11 +177,13 @@ We can see this tree continues until $n/3^k = 1$, where k is the depth of the tr
 The sum of the this tree is also T(n). (!)
 
 We can then use this to say,
+
 $$
+\begin{aligned}
 k = \log_3(n) \\
 T(n) = 2^{k} \times 7 + \sum_{i=0}^{k-1} 2^i(5(\frac{n}{3^i}) + 1) \\
-\text{Simplify by} \\
-5n\sum_{i=0}^{k-1} (\frac{2}{3})^i + 2^i \\
+\text{Simplify the sum with} \\
+\sum_{i=0}^{k-1} 5n(\frac{2}{3})^i + 2^i \\
 5n \times \frac{1 - (\frac{2}{3})^k}{1 - \frac{2}{3}} + 2^k - 1 \\
 \\
 \text{Subbing this in for the sum} \\
@@ -189,8 +191,9 @@ T(n) = 2^{k} \times 7 + \sum_{i=0}^{k-1} 2^i(5(\frac{n}{3^i}) + 1) \\
 \text{Since } k = \log_3(n), \\
 8(2^{\log_3(n)}) + 15n(1 - \frac{2^{\log_3(n)}}{n}) - 1 \\
 -7(2^{\log_3(n)}) + 15n - 1 \\
-\text{By the change of base formula, } 2^{\log_3(n)} = 2^{\frac{\lg n}{\lg 3}} = n^(\frac{1}{\lg 3}) \\
--7n^{\lg 3} + 15n - 1
+\text{By the change of base formula, } 2^{\log_3(n)} = 2^{\frac{\lg n}{\lg 3}} = n^{\frac{1}{\lg 3}} \\
+-7n^{\frac{1}{\lg 3}} + 15n - 1
+\end{aligned}
 $$
 
 As $\frac{1}{\lg 3} < 1$, n is the dominant term.
