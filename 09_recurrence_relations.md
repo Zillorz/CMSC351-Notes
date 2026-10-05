@@ -207,3 +207,125 @@ observe:
 - a = \#children each node has
 - b = factor each child decreases by
 - continue until ...
+
+## Master Theorem
+
+The Master Theorem can easily and quickly find θ for many recurrence relations of the form 
+$T(n) = aT(n/b) + f(n), a, b \in \mathbb{Z}, a \ge 1, b \ge 2$
+
+Suppose we have a recurrence relation of this form
+
+Case 1: if $f(n) = O(n^c)$ for some $c \ge 0$ and $\log_b(a) > c$ then T(n) = $\theta(n^{\log_b(a)})$
+Case 2: if $f(n) = \theta(n^c)$ for some $c \ge 0$ and $\log_b(a) = c$ then T(n) = $\theta(n^{\log_b(a)} \times \lg n)$
+Case 3: if $f(n) = \Omega(n^c)$ for some $c \ge 0$ and $\log_b(a) < c$ then T(n) = $\theta(f(n))$, given f(n) satifies a regularity condition
+
+Case 2f: if $f(n) = \theta(n^c\lg^k(n))$ for some $c \ge 0$ and $\log_b(a) = c$ then $T(n) = \theta(n^{\log_b a} \times \lg^{k+1}n)$
+
+Notes: 
+- $\lg^k(n)\text{ means }(\lg n)^k$
+- case 2 is a special case of 2f, when k=0
+- Regularity condition of case 3 is ignored in this class, ALL examples/problems will have regular f(n)
+- obs: θ -> O, Ω so we could have any case
+- Idea: find $\theta(n^c)$ and compare $\log_b(a)$, use the asymptotic time complexity that matches
+
+There are a lot of examples, sO I'm also gonna explain the idea:
+- Solve for a, b, c
+- Find $\log_a(b)$
+- Now, if the log = c, apply θ version
+- Otherwise, use a O or Ω version, keep in mind you can change the c as these are not as restrictive as θ
+
+### Where doesn't this theorem work?
+- Non-geometric relations: $T(n) = 2T(n - 1) + n$
+- Multiple distinct recurrences: $T(n) = T(\frac{n}{4}) + T(\frac{3n}{4}) + n$
+- Unworkable restrictions: 
+    - $T(n) = 16T(\frac{n}{4}) + f(n)$ where $f(n) = O(n^2)$
+    - See that $\log_4(16) = 2 \ngtr 2$, so we cannot apply the O case, but it's all the info we have
+
+Ex)
+
+$$
+T(n) = 8T(\frac{n}{2}) + n^2 + 1
+f(n) = n^2 + 1 = \theta(n^2)
+\\
+a = 8, b = 2, c = 2
+\log_2(8) = 3 > 2
+\\
+\text{Apply the O(n) case}
+T(n) = \theta(n^{\log_b a}) = \theta(n^3)
+$$
+
+$$
+T(n) = 9T(\frac{n}{3}) + n^2 + n\lg n
+f(n) = n^2 + n\lg n = \theta(n^2)
+\\
+a = 9, b = 3, c = 2
+\log_3(9) = 2 = 2
+\\
+\text{Apply the θ(n) case}
+T(n) = \theta(n^{\log_b a} \times \lg n) = \theta(n^2\lg n)
+$$
+
+$$
+T(n) = 125T(\frac{n}{5}) + n^3\lg n + 7
+f(n) = n^3\lg n + 7 = \theta(n^3\lg n)
+\\
+a = 125, b = 5, c = 3
+\log_5(125) = 3 = 3
+\\
+\text{Apply the generalized θ(n) case}
+T(n) = \theta(n^{\log_b a} \times \lg^2 n) = \theta(n^3\lg^2n)
+$$
+
+$$
+T(n) = 5T(\frac{n}{25}) + n + 1
+f(n) = n + 1 = \theta(n)
+\\
+a = 5, b = 25, c = 1
+\log_25(5) = \frac{1}{2} < 1
+\\
+\text{Apply the Ω(n) case}
+T(n) = \theta(n + 1) = \theta(n)
+$$
+
+More examples)
+
+$$
+T(n) = 3T(\frac{n}{2}) + \lg n
+f(n) = \lg n = \theta(\lg n)
+\\
+a = 3, b = 2
+\log_2(3) \approx 1.5 \ne 0
+\text{Because of this, we cannot apply our generalized θ(n) case}
+\text{However, notice that}
+f(n) = \lg n = O(n)\text{ and } \log_2(3) > 1
+\\
+\text{Using this, apply the O(n) case}
+T(n) = \theta(n^{\log_2(3)})
+$$
+
+$$
+T(n) = 9T(\frac{n}{2}) + n^4\lg n
+f(n) = n^4\lg n = \theta(n^4\lg n)
+\\
+a = 9, b = 2
+\log_2(9) \approx 3 \ne 4
+\text{Because of this, we cannot apply our generalized θ(n) case}
+\text{Our log is around 3, but the power is 4, so we cannot apply the O(n) case either!}
+f(n) = n^4\lg n = \Omega(n^4)\text{ and } \log_2(9) < 4
+\\
+\text{Using this, apply the Ω(n) case}
+T(n) = \theta(n^4\lg n)
+$$
+
+$$
+T(n) = 16T(\frac{n}{2}) + n^3\lg n
+f(n) = n^3\lg n = \theta(n^3\lg n)
+\\
+a = 2, b = 16
+\log_2(16) = 4 \ne 3
+\text{What inequality can we make with our power and log?}
+f(n) = n^3\lg n = O(n^{3.1})
+\\
+\text{Using this, apply the O(n) case}
+T(n) = \theta(n^4)
+$$
