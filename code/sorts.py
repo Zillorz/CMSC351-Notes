@@ -40,50 +40,90 @@ def insertion(nums: list[int]):
 
 def heap_sort(nums: list[int]):
     n = len(nums)
-
-    # need to create a heap
-    # idea, element n has children 2n+1, 2n+2
-    # element n has parent (n-1) // 2
-    # an element is always larger than it's children
     
-    # functions for MUCH better readability
-    # p -> parent of node
     # lc -> left child
     # rc -> right child
-    def p(i: int): return int((i - 1) / 2)
     def lc(i: int): return 2 * i + 1
     def rc(i: int): return 2 * i + 2
 
+    # this function takes a element with two max heaps as children, and converts it to a max heap
+    def max_heapify(nums: list[int], idx: int, len: int):
+        if idx >= len: return
 
-    for i in range(1, n):
-        while nums[p(i)] < nums[i]:
-            swap(nums, p(i), i)
-            i = p(i)
+        if rc(idx) < len and nums[rc(idx)] > nums[idx] and nums[rc(idx)] >= nums[lc(idx)]:
+            swap(nums, rc(idx), idx)
+            max_heapify(nums, rc(idx), len)
+        elif lc(idx) < len and nums[lc(idx)] > nums[idx]:
+            swap(nums, lc(idx), idx)
+            max_heapify(nums, lc(idx), len)
+
+    # this converts any binary tree to a max heap
+    def converttomaxheap(nums: list[int], len: int):
+        for i in range(len // 2, -1, -1): # from len//2 to 0 inc
+            max_heapify(nums, i, len)
+
+    converttomaxheap(nums, n) 
 
     for i in range(n - 1):
         swap(nums, 0, n - 1 - i)
-        # everything past limit is outside of our heap, and in our sorted section
-        j = 0
+
+        # the length of our heap (everything at/past this idx is outside our heap)
         limit = n - 1 - i
-
-        # We have element j at 0, we need to correctly reposition this in the heap
-        # Switch j with the larger child (if any)
-
-        while (lc(j) < limit and nums[lc(j)] > nums[j]) or (rc(j) < limit and nums[rc(j)] > nums[j]):
-            if rc(j) < limit:
-                if nums[rc(j)] > nums[lc(j)]:
-                    swap(nums, rc(j), j)
-                    j = rc(j)
-                else:
-                    swap(nums, lc(j), j)
-                    j = lc(j)
-            else:
-                # at this point, only the left child is a child
-                swap(nums, lc(j), j)
-                j = lc(j)
-
+        max_heapify(nums, 0, limit)
 
     return nums
 
+def merge_sort(nums: list[int]):
+    n = len(nums)
 
-print(heap_sort([5, 3, 2, -1, 4, 34, -23, 43, 23, 12, 73]))
+    if n <= 1: return nums
+
+    def merge(first: list[int], second: list[int]):
+        combined: list[int] = []
+
+        fp = 0
+        sp = 0
+
+        while fp < len(first) or sp < len(second):
+            if not (sp < len(second)) or (fp < len(first) and sp < len(second) and first[fp] < second[sp]):
+                combined.append(first[fp])
+                fp += 1
+            else:
+                combined.append(second[sp])
+                sp += 1
+
+        return combined
+
+
+    left = merge_sort(nums[:n//2])
+    right = merge_sort(nums[n//2:])
+    return merge(left, right)
+
+def quick_sort(nums: list[int]):
+    def quick_sort_aux(nums: list[int], start: int, end: int):
+        if start >= end: return
+
+        pivot = end # great pivot selection!
+
+        for i in range(end - 1, start - 1, - 1): # end-1..start
+            if nums[i] > nums[pivot]:
+                if pivot - 1 == i:
+                    swap(nums, pivot, i)
+                    pivot -= 1
+                else:
+                    swap(nums, pivot, pivot - 1)
+                    swap(nums, pivot, i)
+                    pivot -= 1
+
+        # sort our halves now
+        quick_sort_aux(nums, start, pivot-1)
+        quick_sort_aux(nums, pivot+1, end)
+
+    quick_sort_aux(nums, 0, len(nums) - 1)
+    return nums
+
+
+print(quick_sort([43, 3, -4, 12, -3, -12, 323, -12, -5434, 13, -13]))
+
+
+
