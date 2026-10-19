@@ -103,7 +103,7 @@ def quick_sort(nums: list[int]):
     def quick_sort_aux(nums: list[int], start: int, end: int):
         if start >= end: return
 
-        pivot = end # great pivot selection!
+        pivot = end # great pivot selection (use median or random for a real dataset)!
 
         for i in range(end - 1, start - 1, - 1): # end-1..start
             if nums[i] > nums[pivot]:
