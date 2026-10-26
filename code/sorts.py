@@ -100,30 +100,56 @@ def merge_sort(nums: list[int]):
     return merge(left, right)
 
 def quick_sort(nums: list[int]):
-    def quick_sort_aux(nums: list[int], start: int, end: int):
-        if start >= end: return
+    def partition(nums: list[int], left: int, right: int):
+        pivot = nums[right]
+        print(pivot)
 
-        pivot = end # great pivot selection (use median or random for a real dataset)!
+        t = left
+        for i in range(t, right):
+            if nums[i] <= pivot:
+                swap(nums, t, i)
+                t += 1
 
-        for i in range(end - 1, start - 1, - 1): # end-1..start
-            if nums[i] > nums[pivot]:
-                if pivot - 1 == i:
-                    swap(nums, pivot, i)
-                    pivot -= 1
-                else:
-                    swap(nums, pivot, pivot - 1)
-                    swap(nums, pivot, i)
-                    pivot -= 1
+        swap(nums, t, right)
+        return t
 
-        # sort our halves now
-        quick_sort_aux(nums, start, pivot-1)
-        quick_sort_aux(nums, pivot+1, end)
+
+    def quick_sort_aux(nums: list[int], left: int, right: int):
+        if left >= right: return
+        
+        pivot_idx = partition(nums, left, right)
+        quick_sort_aux(nums, left, pivot_idx-1)
+        quick_sort_aux(nums, pivot_idx+1, right)
 
     quick_sort_aux(nums, 0, len(nums) - 1)
     return nums
 
+def counting_sort(nums: list[int]):
+    n = len(nums)
 
-print(quick_sort([43, 3, -4, 12, -3, -12, 323, -12, -5434, 13, -13]))
+    size = max(nums) # O(N) time!
+    pos = [0 for _ in range(size+1)]
+
+    for num in nums:
+        pos[num] += 1
+
+    for i in range(1, size+1):
+        pos[i] = pos[i] + pos[i - 1]
+
+    new_list = [0 for _ in range(n)]
+    
+    for i in reversed(range(n)):
+        value = nums[i]
+        new_list[pos[value] - 1] = value
+        pos[value] -= 1
+
+    for i in range(n):
+        nums[i] = new_list[i]
+
+    return nums
+
+
+print(counting_sort([17, 12, 3, 4, 5, 12, 3, 3, 3, 4, 5, 6, 8, 11, 9]))
 
 
 
