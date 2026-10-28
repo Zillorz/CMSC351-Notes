@@ -127,13 +127,13 @@ def quick_sort(nums: list[int]):
 def counting_sort(nums: list[int]):
     n = len(nums)
 
-    size = max(nums) # O(N) time!
-    pos = [0 for _ in range(size+1)]
+    size = max(nums) + 1 # O(N) time!
+    pos = [0 for _ in range(size)]
 
     for num in nums:
         pos[num] += 1
 
-    for i in range(1, size+1):
+    for i in range(1, size):
         pos[i] = pos[i] + pos[i - 1]
 
     new_list = [0 for _ in range(n)]
@@ -148,8 +148,45 @@ def counting_sort(nums: list[int]):
 
     return nums
 
+from math import log10
 
-print(counting_sort([17, 12, 3, 4, 5, 12, 3, 3, 3, 4, 5, 6, 8, 11, 9]))
+# modified counting sort to help us out for radix
+# necessary because we didn't implement sorts on properties
+def counting_sort_on_digit(nums: list[int], d: int):
+    n = len(nums)
+
+    def get_digit(num: int, d: int):
+        return int(num / (10 ** d)) % 10
+
+    size = 10 # 0 through 9
+    pos = [0 for _ in range(size)]
+
+    for num in nums:
+        pos[get_digit(num, d)] += 1
+
+    for i in range(1, size):
+        pos[i] += pos[i - 1]
+
+    new_list = [0 for _ in range(n)]
+
+    for i in reversed(range(n)):
+        value = nums[i]
+        digit = get_digit(value, d)
+        new_list[pos[digit] - 1] = value
+        pos[digit] -= 1
+
+    for i in range(n):
+        nums[i] = new_list[i]
+
+def radix_sort(nums: list[int]):
+    # normally our max-digit count would be passed to us
+    d = int(log10(max(nums)) + 1)
+
+    for i in range(d):
+        # run our sorting algorithm on the digit D of our list
+        counting_sort_on_digit(nums, i)
+
+    return nums
 
 
-
+print(radix_sort([23, 6, 34, 23, 5, 6, 35, 35, 24,23, 23,23, 3, 5,6, 2332, 7, 8,87,87, 13, 32,4, 4]))
